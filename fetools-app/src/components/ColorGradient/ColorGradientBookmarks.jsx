@@ -10,7 +10,7 @@ export default function ColorGradientBookmarks({
     setColorsArr,
     setInputValue,
     setGradientColors,
-    inputValue
+    inputValue,
 }) {
     return (
         <ToolSection title="Your Collection" icon="bookmarks">
@@ -19,42 +19,60 @@ export default function ColorGradientBookmarks({
                 removeBookmark={removeBookmark}
                 formatBookmarkCardStyle={(item) => {
                     console.log("item", item);
-                    if(!item){return}
+                    if (!item) {
+                        return;
+                    }
                     return {
                         background: `
-                            ${item.type}-gradient(
-                            ${item.type==="radial"?"":`${item.rotation}deg,`} 
-                            ${item.gradientColors
-                            .map((color) => color.colorStr)
-                            .join(", ")})`,
+                            ${item?.type}-gradient(
+                            ${
+                                item?.type === "radial"
+                                    ? ""
+                                    : `${item?.rotation}deg,`
+                            } 
+                            ${item?.gradientColors
+                                .map((color) => color?.colorStr)
+                                .join(", ")})`,
                         padding: "1rem",
                     };
                 }}
                 formatHoverActions={(item) => {
-                    if(!item){return}
+                    if (!item) {
+                        return;
+                    }
                     const newGradientCode = `
-                    ${item.type}-gradient(
-                    ${item.type==="radial"?"":`${item.rotation}deg,`} 
-                    ${item.gradientColors
-                    .map((color) => color.colorStr)
-                    .join(", ")})`;
+                    ${item?.type}-gradient(
+                    ${item?.type === "radial" ? "" : `${item?.rotation}deg,`} 
+                    ${item?.gradientColors
+                        .map((color) => color?.colorStr)
+                        .join(", ")})`;
                     const EyeDropAction = (
                         <EyeDropButton
                             key="EyeDropButton"
                             title={"New Gradient Set"}
                             setState={() => {
-
-                                setColorsArr(item.gradientColors)
-                                setInputValue({...inputValue, rotation: item.rotation/3.6, type: item.type})
-                                setGradientColors(item.gradientColors.map((paramColor,idx)=>(
-                                    {
-                                      ...paramColor, 
-                                      value:( 
-                                      idx===item.gradientColors.length-1
-                                      ?100
-                                      :(100/(item.gradientColors.length-1))*idx)
-                                    }
-                                  )))
+                                setColorsArr(item.gradientColors);
+                                setInputValue({
+                                    ...inputValue,
+                                    rotation: item.rotation / 3.6,
+                                    type: item.type,
+                                });
+                                setGradientColors(
+                                    item.gradientColors.map(
+                                        (paramColor, idx) => ({
+                                            ...paramColor,
+                                            value:
+                                                idx ===
+                                                item.gradientColors.length - 1
+                                                    ? 100
+                                                    : (100 /
+                                                          (item.gradientColors
+                                                              .length -
+                                                              1)) *
+                                                      idx,
+                                        })
+                                    )
+                                );
                             }}
                             newValue={newGradientCode}
                             toastState={toastState}
