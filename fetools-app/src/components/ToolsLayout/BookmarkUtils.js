@@ -44,7 +44,7 @@ export function checkForLocalStorage(pageName){
         localStorage.setItem(`${pageName}-favorites`, JSON.stringify([]))
     }
 
-    return JSON.parse(localStorage.getItem(`${pageName}-favorites`))
+    return JSON.parse(localStorage.getItem(`${pageName}-bookmarks`))
 }
 
 export function saveNewArray(pageName, newArr){
@@ -55,6 +55,7 @@ export function compareItems(comparisonObj, pageName, bookmarkProp, checkObjects
     // First try simple comparison for strings and numbers
     
     const isBookmarked = checkForLocalStorage(pageName).find(bookmark=>{
+        if(!bookmark) return false
         return bookmark[bookmarkProp]===comparisonObj[bookmarkProp]?true:false
     });
     

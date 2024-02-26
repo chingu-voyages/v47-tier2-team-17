@@ -19,6 +19,7 @@ function CharacterFinder() {
   const [itemsPerPage] = useState(16);
   const [clearInput, setClearInput] = useState(false);
 
+
   const handlePageClick = ({ selected }) => {
     setCurrentPage(selected);
   };
@@ -139,7 +140,7 @@ function CharacterFinder() {
   const categoryData = searchQuery
     ? searchResults
     : selectedCategory === "collection"
-    ? [] // TODO - Read out collection from local storage.
+    ? getBookmarkCollection()?getBookmarkCollection():[] // TODO - Read out collection from local storage.
     : htmlCharacters[selectedCategory];
 
   const currentCategoryData = categoryData.slice(
@@ -217,10 +218,13 @@ function CharacterFinder() {
             : "char"
         }
       >
+        {}
+
         <div className="grid w-full grid-cols-4">
           {currentCategoryData.map((character, index) => (
             <CharacterCard
               key={index}
+              character={character}
               char={character.character}
               name={character.name}
               unicode={
@@ -233,6 +237,7 @@ function CharacterFinder() {
               cssCode={character.css}
             />
           ))}
+
         </div>
         <div className="flex justify-center p-6">
           <ReactPaginate
@@ -303,6 +308,11 @@ function CharacterFinder() {
       />
     </ToolMain>
   );
+
+  function getBookmarkCollection(){
+    console.log(JSON.parse(localStorage.getItem(`characters-bookmarks`)))
+    return JSON.parse(localStorage.getItem(`characters-bookmarks`))
+  }
 }
 
 export default CharacterFinder;

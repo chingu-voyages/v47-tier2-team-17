@@ -28,13 +28,11 @@ const SliderInput = forwardRef(function SliderInput(props, ref) {
     inputElement.value = defaultValue
   },[defaultValue])
 
-
   useEffect(()=>{
     if(ref){
       ref.current = valueTypes[activeIndex]
       
     }
-    
   },[activeIndex])
 
   return (

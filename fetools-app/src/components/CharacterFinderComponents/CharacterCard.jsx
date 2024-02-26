@@ -1,18 +1,30 @@
-import Bookmark from "../ToolsLayout/Bookmark";
+import useBookmarks from "@/src/hooks/useBookmarks";
+import NewBookmark from "../Bookmarks/BookmarkButton";
 
 const CharacterCard = ({
+  character,
   char,
   name,
   unicode,
   htmlcode,
   htmlEntity,
-  cssCode,
+  cssCode
 }) => {
+
+
+  const [isBookmarked, bookmarks, toggleBookmark, removeBookmark] = useBookmarks(character, "characters");
+
   return (
-    <div className="p-6">
+    <div 
+    className="relative p-6">
       <p className="py-4 text-6xl font-bold text-left border-b-4 border-black">
         {char}
       </p>
+      <NewBookmark
+      toggleBookmark={toggleBookmark}
+      isBookmarked={isBookmarked}
+      toolState={character}
+      className="absolute top-14 right-6"/>
       <div className="flex flex-wrap">
         <div className="w-full">
           <p className="pt-2 font-bold text-left uppercase text-s">{name}</p>
